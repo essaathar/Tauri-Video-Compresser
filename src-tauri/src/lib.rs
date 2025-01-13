@@ -4,9 +4,10 @@ fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from backend!", name)
 }
 
+// import the modules
 use ffmpeg_sidecar::command::FfmpegCommand;
 use anyhow::Result;
-use std::fs; // Import the fs module
+use std::fs;
 use dirs;
 
 #[tauri::command]
@@ -35,8 +36,9 @@ fn handle_filename(filename: String) -> Result<String, String> {
 }
 
 #[tauri::command]
-fn handle_drop_down(filenames: Vec<String>) -> Result<String, String> {
+fn handle_files(filenames: Vec<String>) -> Result<String, String> {
     //println!("Recieved filenames: {:?}", filenames);
+
     // Get the path to the user's desktop
     let desktop_path = dirs::desktop_dir().ok_or_else(|| "Could not find desktop directory".to_string())?;
 
@@ -74,14 +76,35 @@ fn handle_drop_down(filenames: Vec<String>) -> Result<String, String> {
     Ok(format!("Processed {} filenames!", filenames.len()))
 }
 
+#[tauri::command]
+fn handle_folder(input_folder_path: String) -> Result<String, String> {
+    // Get the path to the user's desktop
+    let desktop_path = dirs::desktop_dir().ok_or_else(|| "Could not find desktop directory".to_string())?;
+
+    // Create the "output" directory on the desktop
+    let output_dir = desktop_path.join("video-compresser-output");
+    fs::create_dir_all(&output_dir).map_err(|e| e.to_string())?;
+
+    let mut filenames: Vec<String> = Vec::new();
+    // for entry in fs::read_dir(&input_folder_path).map_err(|e| e.to_string())? {
+
+    // }
+    let dir_path = fs::read_dir(&input_folder_path).unwrap();
+    for path in dir_path {
+        println!("Filename: {}", path.unwrap().path().display())
+    }
+
+    Ok("Folder successfully processed".to_string())
+}
+
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    ffmpeg_sidecar::download::auto_download().unwrap();
+    ffmpeg_sidecar::download::auto_download().unwrap(); // auto downloads the ffmpeg binary, unzips it, and puts the binary wherever the app exe is  
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_shell::init())
-        .invoke_handler(tauri::generate_handler![greet, handle_filename, handle_drop_down])
+        .invoke_handler(tauri::generate_handler![handle_files, handle_folder])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

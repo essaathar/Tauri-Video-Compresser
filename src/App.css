@@ -1,10 +1,4 @@
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
-}
 
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafb);
-}
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -19,41 +13,67 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  --drs-color: #005baa;
+  --drs-color-2: #007aff;
 }
 
 .container {
-  margin: 0;
-  padding-top: 10vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 20px;
+}
+
+.heading {
+  font-size: 2.5rem;
+  font-weight: bold;
   text-align: center;
+  margin-bottom: 20px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: 0.75s;
+.subheading {
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #555;
 }
 
-.logo.tauri:hover {
-  filter: drop-shadow(0 0 2em #24c8db);
+.button-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
 }
 
-.row {
+.upload-button {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: var(--drs-color-2);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 20px 30px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.upload-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.upload-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(124, 220, 124, 0.5);
+}
+
+
+/* .row {
   display: flex;
   justify-content: center;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: #535bf2;
 }
 
 h1 {
@@ -93,7 +113,7 @@ button {
 
 #greet-input {
   margin-right: 5px;
-}
+} */
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -144,4 +164,38 @@ button {
 .drag-drop-zone.drag-over {
   background-color: #cce5ff; /* Highlighted background */
   border-color: #0056b3; /* Darker blue border */
+}
+
+/* Back Button */
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--drs-color-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+  margin: 20px; /* Adjust for spacing from the top-left */
+}
+
+/* .back-button:hover {
+  transform: scale(1.1);
+  color: #81c784;
+}
+
+.back-button:focus {
+  outline: none;
+  color: #388e3c;
+} */
+
+.back-icon {
+  font-size: 2rem;
+}
+
+.back-text {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
